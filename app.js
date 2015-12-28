@@ -3,7 +3,7 @@
  */
 var http=require('http');
 var url=require('url');
-var ethercat=require('node-ethercat');
+var ethercat=require('../node-ethercat/node-ethercat.js');
 
 var port=3005;
 
