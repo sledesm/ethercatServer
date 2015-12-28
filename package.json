@@ -1,0 +1,29 @@
+{
+  "name": "ethercat-server",
+  "version": "1.0.0",
+  "description": "HTTP server to interact with ethercat",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sledesm/ethercatServer.git"
+  },
+  "keywords": [
+    "ethercat",
+    "node",
+    "ihg",
+    "ethercat",
+    "master"
+  ],
+  "author": "Santiago Ledesma",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/sledesm/ethercatServer/issues"
+  },
+  "homepage": "https://github.com/sledesm/ethercatServer#readme",
+  "dependencies": {
+    "node-ethercat":"*"
+  }
+}
