@@ -212,20 +212,54 @@ var slaves=[
     }
 ]
 
-function request(fnc,params,callback){
-    $.ajax({url:'http://localhost:3005/'+fnc,data:JSON.stringify(params)}).
-        success(function(what){
-            callback(what);
-        }).
-        error(function(err){
-            callback({result:"error",error:''+err});
-        })
+window.ajaxRequest=function(){
+    var activexmodes=["Msxml2.XMLHTTP", "Microsoft.XMLHTTP"] //activeX versions to check for in IE
+    if (window.ActiveXObject){ //Test for support for ActiveXObject in IE first (as XMLHttpRequest in IE7 is broken)
+        for (var i=0; i<activexmodes.length; i++){
+            try{
+                return new ActiveXObject(activexmodes[i])
+            }
+            catch(e){
+                //suppress error
+            }
+        }
+    }
+    else if (window.XMLHttpRequest) // if Mozilla, Safari etc
+        return new XMLHttpRequest()
+    else
+        return false
 }
 
-request('config',{slaves:slaves},function(res){
-    console.log(res);
-    request('getPins',{},function(res){
-        console.log(res);
+window.request = function(fnc, params, callback) {
+    var url = "http://localhost:3005/" + fnc;
+    var mypostrequest = new ajaxRequest()
+    mypostrequest.onreadystatechange = function() {
+        if (mypostrequest.readyState == 4) {
+            callback(JSON.parse(mypostrequest.responseText));
+        }
+    }
+    mypostrequest.open("POST", url, true)
+    mypostrequest.send(JSON.stringify(params));
+
+}
+
+
+request('configure',{slaves:slaves},function(res){
+    if (res.result=="error"){
+        console.error(res);
+        return;
+    }
+    request('start',{},function(res){
+        if (res.result=="error"){
+            console.error(res);
+            return;
+        }
+        request('activate',{},function(res){
+            if (res.result=="error"){
+                console.log(res);
+            }
+        })
     })
+    console.log(res);
 })
 

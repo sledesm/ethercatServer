@@ -13,14 +13,17 @@ if (process.argv[2]){
 
 
 function start(params,callback){
+    console.log("calling start");
     ethercat.start(params,callback);
 }
 
 function activate(params,callback){
+    console.log("calling activate");
     ethercat.activate(params,callback);
 }
 
 function addSlave(params,callback){
+    console.log("calling addSlave");
     ethercat.addSlave(params,callback);
 }
 
